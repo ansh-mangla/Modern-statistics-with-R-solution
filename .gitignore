@@ -1,4 +1,7 @@
-Modern-stat-with-R.Rproj
+# RStudio junk files
+.Rhistory
+.Rproj.user/
+*.Rproj
 *.Rmd
 !README.md
 
