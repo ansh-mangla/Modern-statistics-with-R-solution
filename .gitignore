@@ -3,4 +3,7 @@
 .Rproj.user/
 *.Rproj
 
+# other uneeded files
+*.Rmd
+*.nb.html
 
