@@ -6,4 +6,5 @@
 # other uneeded files
 *.Rmd
 *.nb.html
+*.html
 
