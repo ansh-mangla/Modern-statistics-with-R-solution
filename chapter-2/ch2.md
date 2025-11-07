@@ -198,7 +198,7 @@ install.packages("palmerpenguins")
     ## package 'palmerpenguins' successfully unpacked and MD5 sums checked
     ## 
     ## The downloaded binary packages are in
-    ##  C:\Users\Ansh\AppData\Local\Temp\Rtmp8GfPLX\downloaded_packages
+    ##  C:\Users\Ansh\AppData\Local\Temp\RtmpU1kqYa\downloaded_packages
 
 ``` r
 library(ggplot2)
@@ -267,3 +267,125 @@ summary(penguins)
     ##  3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
     ##  Max.   :231.0     Max.   :6300                Max.   :2009  
     ##  NA's   :2         NA's   :2
+
+### Exercise 2.12
+
+Create a `scatterplot` with total sleep time along the x-axis and time
+awake along the y-axis (using the `msleep` data). What pattern do you
+see? Can you explain it?
+
+``` r
+library(ggplot2)
+ggplot(msleep, aes(sleep_total, awake)) +
+  geom_point()
+```
+
+![](ch2_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+### Exercise 2.13
+
+Using the penguins data, do the following:
+
+Create a scatterplot with bill length along the x-axis and flipper
+length along the y-axis. Change the x-axis label to read “Bill length
+(mm)” and the y-axis label to “Flipper length (mm)”. Use species to set
+the colour of the points.
+
+Try adding the argument alpha = 1 to geom_point, i.e., geom_point(alpha
+= 1). Does anything happen? Try changing the 1 to 0.75 and 0.25 and see
+how that affects the plot.
+
+``` r
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm, colour = species)) +
+  geom_point(alpha = 1) + 
+  labs(x="Bill length (mm)", y="Flipper length (mm)")
+```
+
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](ch2_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+### Exercise 2.14
+
+Similar to how you changed the colour of the points, you can also change
+their size and shape. The arguments for this are called size and shape.
+
+Change the scatterplot from Exercise 2.13 so that animals from different
+islands are represented by different shapes.
+
+Then change it so that the size of each point is determined by the body
+mass, i.e., the variable body_mass_g.
+
+``` r
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm, colour = species, shape = island, size = body_mass_g)) +
+  geom_point(alpha = 0.5) + 
+  labs(x="Bill length (mm)", y="Flipper length (mm)")
+```
+
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](ch2_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+
+### Exercise 2.15
+
+Using the msleep data, create a plot of log-transformed body weight
+versus log-transformed brain weight. Use total sleep time to set the
+colours of the points. Change the text on the axes to something
+informative.
+
+``` r
+ggplot(msleep, aes(bodywt, brainwt, colour = sleep_total)) + 
+      geom_point(size=2.4) +
+      labs( x= "log scale body weight",y = "log scale brain weight") +
+      scale_x_log10() +
+      scale_y_log10()
+```
+
+    ## Warning: Removed 27 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](ch2_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+
+### Exercise 2.16 Using the penguins data, do the following:
+
+Create a scatterplot with bill_length_mm along the x-axis and
+flipper_length_mm along the y-axis, facetted by species.
+
+Read the documentation for facet_wrap (?facet_wrap). How can you change
+the number of rows in the plot grid? Create the same plot as in part 1,
+but with 2 rows.
+
+``` r
+ggplot(penguins, aes(bill_length_mm, flipper_length_mm)) +
+  geom_point(size = 1.5) +
+  labs(x="bill length (mm)", y="flipper length (nn)") +
+  facet_wrap(~species, nrow =2)
+```
+
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](ch2_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+
+### Exercise 2.17
+
+Using the penguins data, do the following: Create boxplots of bill
+lengths, grouped by species. Read the documentation for `geom_boxplot.`
+How can you change the colours of the boxes and their outlines? Add
+`geom_jitter(size = 0.5, alpha = 0.25)`to the plot. What happens?
+
+``` r
+ggplot(penguins, aes(species, bill_length_mm)) +
+  geom_boxplot(box.colour = "black", fill = "skyblue" ) +
+  geom_jitter(size = 1, alpha = 0.5, colour = "#522363") 
+```
+
+    ## Warning: Removed 2 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+    ## Warning: Removed 2 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](ch2_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
