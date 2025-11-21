@@ -198,7 +198,7 @@ install.packages("palmerpenguins")
     ## package 'palmerpenguins' successfully unpacked and MD5 sums checked
     ## 
     ## The downloaded binary packages are in
-    ##  C:\Users\Ansh\AppData\Local\Temp\RtmpGEITM2\downloaded_packages
+    ##  C:\Users\Ansh\AppData\Local\Temp\RtmpQ5i252\downloaded_packages
 
 ``` r
 library(ggplot2)
@@ -251,22 +251,22 @@ categorical variables). Are there any missing values?
 summary(penguins)
 ```
 
-    ##       species          island    bill_length_mm  bill_depth_mm  
-    ##  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
-    ##  Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
-    ##  Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
-    ##                                  Mean   :43.92   Mean   :17.15  
-    ##                                  3rd Qu.:48.50   3rd Qu.:18.70  
-    ##                                  Max.   :59.60   Max.   :21.50  
-    ##                                  NA's   :2       NA's   :2      
-    ##  flipper_length_mm  body_mass_g       sex           year     
-    ##  Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
-    ##  1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
-    ##  Median :197.0     Median :4050   NA's  : 11   Median :2008  
-    ##  Mean   :200.9     Mean   :4202                Mean   :2008  
-    ##  3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
-    ##  Max.   :231.0     Max.   :6300                Max.   :2009  
-    ##  NA's   :2         NA's   :2
+    ##       species          island    bill_length_mm  bill_depth_mm   flipper_length_mm
+    ##  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10   Min.   :172.0    
+    ##  Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60   1st Qu.:190.0    
+    ##  Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30   Median :197.0    
+    ##                                  Mean   :43.92   Mean   :17.15   Mean   :200.9    
+    ##                                  3rd Qu.:48.50   3rd Qu.:18.70   3rd Qu.:213.0    
+    ##                                  Max.   :59.60   Max.   :21.50   Max.   :231.0    
+    ##                                  NA's   :2       NA's   :2       NA's   :2        
+    ##   body_mass_g       sex           year     
+    ##  Min.   :2700   female:165   Min.   :2007  
+    ##  1st Qu.:3550   male  :168   1st Qu.:2007  
+    ##  Median :4050   NA's  : 11   Median :2008  
+    ##  Mean   :4202                Mean   :2008  
+    ##  3rd Qu.:4750                3rd Qu.:2009  
+    ##  Max.   :6300                Max.   :2009  
+    ##  NA's   :2
 
 ### Exercise 2.12
 
@@ -410,8 +410,7 @@ ggplot(penguins, aes(bill_length_mm)) +
 
     ## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 
-    ## Warning: Removed 2 rows containing non-finite outside the scale range
-    ## (`stat_bin()`).
+    ## Warning: Removed 2 rows containing non-finite outside the scale range (`stat_bin()`).
 
 ![](ch2_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
@@ -572,7 +571,9 @@ following matrices: $$
   1 & 2 & 3\\
   4 & 5 & 6
 \end{pmatrix}
- $$ and
+ $$
+
+and
 
 $$
 \begin{pmatrix}
@@ -797,3 +798,279 @@ airquality[, c(-3, -4)]
     ## 151    14     191     9  28
     ## 152    18     131     9  29
     ## 153    20     223     9  30
+
+### Exercise 2.25
+
+Use the bookstore data frame to do the following:
+
+Add a new variable rev_per_minute which is the ratio between purchase
+and the visit length.
+
+Oh no, there’s been an error in the data entry! Replace the purchase
+amount for the 80-year-old customer with 16.
+
+``` r
+age <- c(28, 48, 47, 71, 22, 80, 48, 30, 31)
+purchase <- c(20, 59, 2, 12, 22, 160, 34, 34, 29)
+bookstore <- data.frame(age, purchase)
+bookstore$visit_length <- c(5, 2, 20, 22, 12, 31, 9, 10, 11)
+bookstore$rev_per_minute = (bookstore$purchase/bookstore$visit_length)
+bookstore[6, 2] = 16
+bookstore
+```
+
+    ##   age purchase visit_length rev_per_minute
+    ## 1  28       20            5      4.0000000
+    ## 2  48       59            2     29.5000000
+    ## 3  47        2           20      0.1000000
+    ## 4  71       12           22      0.5454545
+    ## 5  22       22           12      1.8333333
+    ## 6  80       16           31      5.1612903
+    ## 7  48       34            9      3.7777778
+    ## 8  30       34           10      3.4000000
+    ## 9  31       29           11      2.6363636
+
+### Exercise 2.26
+
+The following tasks all involve checking conditions for the airquality
+data:
+
+Which was the coldest day during the period?
+
+``` r
+airquality[which.min(airquality$Temp), 6] 
+```
+
+    ## [1] 5
+
+How many days was the wind speed greater than 17 mph?
+
+``` r
+sum(airquality$Wind > 17)
+```
+
+    ## [1] 3
+
+How many missing values are there in the Ozone vector?
+
+``` r
+sum(is.na(airquality$Ozone))
+```
+
+    ## [1] 37
+
+How many days are there where the temperature was below 70 and the wind
+speed was above 10?
+
+``` r
+sum(airquality$Temp < 70 & airquality$Wind > 10)
+```
+
+    ## [1] 22
+
+### Exercise 2.27
+
+The function cut can be used to create a categorical variable from a
+numerical variable, by dividing it into categories corresponding to
+different intervals. Read its documentation and then create a new
+categorical variable in the airquality data, TempCat, which divides Temp
+into three intervals (50, 70\], (70, 90\], (90, 110\]
+
+``` r
+airquality$tempCat <- cut(airquality$Temp, breaks = c(50, 70, 90, 110))
+head(airquality)
+```
+
+    ##   Ozone Solar.R Wind Temp Month Day tempCat
+    ## 1    41     190  7.4   67     5   1 (50,70]
+    ## 2    36     118  8.0   72     5   2 (70,90]
+    ## 3    12     149 12.6   74     5   3 (70,90]
+    ## 4    18     313 11.5   62     5   4 (50,70]
+    ## 5    NA      NA 14.3   56     5   5 (50,70]
+    ## 6    28      NA 14.9   66     5   6 (50,70]
+
+### Exercise 2.28
+
+8 Install the datasauRus package using install.packages(“datasauRus”)
+(note the capital R!). It contains the dataset datasaurus_dozen. Check
+its structure and then do the following:
+
+``` r
+library(datasauRus)
+```
+
+    ## Warning: package 'datasauRus' was built under R version 4.5.2
+
+``` r
+# View(datasaurus_dozen)
+str(datasaurus_dozen)
+```
+
+    ## tibble [1,846 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ dataset: chr [1:1846] "dino" "dino" "dino" "dino" ...
+    ##  $ x      : num [1:1846] 55.4 51.5 46.2 42.8 40.8 ...
+    ##  $ y      : num [1:1846] 97.2 96 94.5 91.4 88.3 ...
+    ##  - attr(*, "spec")=List of 2
+    ##   ..$ cols   :List of 3
+    ##   .. ..$ dataset: list()
+    ##   .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"
+    ##   .. ..$ x      : list()
+    ##   .. .. ..- attr(*, "class")= chr [1:2] "collector_double" "collector"
+    ##   .. ..$ y      : list()
+    ##   .. .. ..- attr(*, "class")= chr [1:2] "collector_double" "collector"
+    ##   ..$ default: list()
+    ##   .. ..- attr(*, "class")= chr [1:2] "collector_guess" "collector"
+    ##   ..- attr(*, "class")= chr "col_spec"
+
+Compute the mean of x, mean of y, standard deviation of x, standard
+deviation of y, and correlation between x and y, grouped by dataset. Are
+there any differences between the 12 datasets?
+
+``` r
+# mean of x and y grouped by dataset
+aggregate(cbind(x, y) ~ dataset, data=datasaurus_dozen, FUN=mean)
+```
+
+    ##       dataset        x        y
+    ## 1        away 54.26610 47.83472
+    ## 2    bullseye 54.26873 47.83082
+    ## 3      circle 54.26732 47.83772
+    ## 4        dino 54.26327 47.83225
+    ## 5        dots 54.26030 47.83983
+    ## 6     h_lines 54.26144 47.83025
+    ## 7  high_lines 54.26881 47.83545
+    ## 8  slant_down 54.26785 47.83590
+    ## 9    slant_up 54.26588 47.83150
+    ## 10       star 54.26734 47.83955
+    ## 11    v_lines 54.26993 47.83699
+    ## 12 wide_lines 54.26692 47.83160
+    ## 13    x_shape 54.26015 47.83972
+
+``` r
+# mean of x and y grouped by dataset
+aggregate(cbind(x, y) ~ dataset, data=datasaurus_dozen, FUN=sd)
+```
+
+    ##       dataset        x        y
+    ## 1        away 16.76982 26.93974
+    ## 2    bullseye 16.76924 26.93573
+    ## 3      circle 16.76001 26.93004
+    ## 4        dino 16.76514 26.93540
+    ## 5        dots 16.76774 26.93019
+    ## 6     h_lines 16.76590 26.93988
+    ## 7  high_lines 16.76670 26.94000
+    ## 8  slant_down 16.76676 26.93610
+    ## 9    slant_up 16.76885 26.93861
+    ## 10       star 16.76896 26.93027
+    ## 11    v_lines 16.76996 26.93768
+    ## 12 wide_lines 16.77000 26.93790
+    ## 13    x_shape 16.76996 26.93000
+
+``` r
+by(datasaurus_dozen[, 2:3], datasaurus_dozen$dataset, cor)
+```
+
+    ## datasaurus_dozen$dataset: away
+    ##             x           y
+    ## x  1.00000000 -0.06412835
+    ## y -0.06412835  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: bullseye
+    ##             x           y
+    ## x  1.00000000 -0.06858639
+    ## y -0.06858639  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: circle
+    ##             x           y
+    ## x  1.00000000 -0.06834336
+    ## y -0.06834336  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: dino
+    ##             x           y
+    ## x  1.00000000 -0.06447185
+    ## y -0.06447185  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: dots
+    ##             x           y
+    ## x  1.00000000 -0.06034144
+    ## y -0.06034144  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: h_lines
+    ##             x           y
+    ## x  1.00000000 -0.06171484
+    ## y -0.06171484  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: high_lines
+    ##             x           y
+    ## x  1.00000000 -0.06850422
+    ## y -0.06850422  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: slant_down
+    ##             x           y
+    ## x  1.00000000 -0.06897974
+    ## y -0.06897974  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: slant_up
+    ##             x           y
+    ## x  1.00000000 -0.06860921
+    ## y -0.06860921  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: star
+    ##            x          y
+    ## x  1.0000000 -0.0629611
+    ## y -0.0629611  1.0000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: v_lines
+    ##             x           y
+    ## x  1.00000000 -0.06944557
+    ## y -0.06944557  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: wide_lines
+    ##             x           y
+    ## x  1.00000000 -0.06657523
+    ## y -0.06657523  1.00000000
+    ## ------------------------------------------------------------------ 
+    ## datasaurus_dozen$dataset: x_shape
+    ##             x           y
+    ## x  1.00000000 -0.06558334
+    ## y -0.06558334  1.00000000
+
+Make a scatterplot of x against y for each dataset (use facetting!). Are
+there any differences between the 12 datasets?
+
+``` r
+library(ggplot2)
+ggplot(datasaurus_dozen, aes(x, y)) + 
+  geom_point() +
+  facet_wrap(~dataset)
+```
+
+![](ch2_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+
+\###Exercise 2.29 Using the bookstore data:
+
+``` r
+age <- c(28, 48, 47, 71, 22, 80, 48, 30, 31)
+purchase <- c(20, 59, 2, 12, 22, 160, 34, 34, 29)
+visit_length <- c(5, 2, 20, 22, 12, 31, 9, 10, 11)
+bookstore <- data.frame(age, purchase, visit_length)
+```
+
+Add a new variable rev_per_minute which is the ratio between purchase
+and the visit length, using a pipe and a function from dplyr.
+
+``` r
+bookstore |> 
+  mutate(rev_per_minute = purchase / visit_length) 
+```
+
+    ##   age purchase visit_length rev_per_minute
+    ## 1  28       20            5      4.0000000
+    ## 2  48       59            2     29.5000000
+    ## 3  47        2           20      0.1000000
+    ## 4  71       12           22      0.5454545
+    ## 5  22       22           12      1.8333333
+    ## 6  80      160           31      5.1612903
+    ## 7  48       34            9      3.7777778
+    ## 8  30       34           10      3.4000000
+    ## 9  31       29           11      2.6363636
